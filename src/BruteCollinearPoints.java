@@ -1,14 +1,39 @@
-public class BruteCollinearPoints {
-    public BruteCollinearPoints(Point[] points){
-         double m = points[0].slopeTo(points[1]);
-         double n = points[0].slopeTo(points[2]);
-         double o = points[0].slopeTo(points[3]);
+import javax.swing.text.Segment;
+import java.util.LinkedList;
 
-         if (m == n && m == o){
-                LineSegment q = new LineSegment(points[0], points[1]);
+public class BruteCollinearPoints {
+    LinkedList<LineSegment> segment = new LinkedList<>();
+    int numOfSegments = 0;
+
+    public BruteCollinearPoints(Point[] points){
+
+
+         for (int i = 0; i < points.length; i++){
+             for (int j = i+1; j < points.length; j++){
+                 for (int k =j+1; k < points.length; k++){
+                     for (int m = k+1; m < points.length; m++ ){
+                         if (points[i].slopeTo(points[j]) == points[i].slopeTo(points[k])
+                         && points[i].slopeTo(points[j]) == points[i].slopeTo(points[m])){
+                             numOfSegments++;
+                             segment.add(new LineSegment(points[i], points[m]));
+                         }
+                     }
+                 }
+             }
          }
-         return q;
     }  // finds all line segments containing 4 points
-    public           int numberOfSegments()        // the number of line segments
-    public LineSegment[] segments()                // the line segments
+    public  int numberOfSegments(){
+        return numberOfSegments();
+    }        // the number of line segments
+    public LineSegment[] segments(){
+        LineSegment[] segments = new LineSegment[numberOfSegments()];
+        for(int e = 0; e < numOfSegments; e++){
+
+            segments[e] = segment.removeFirst();
+        }
+
+        return segments;
+
+    }// the line segments
+
 }
