@@ -10,7 +10,10 @@ public class FastCollinearPoints {
     private LineSegment[] segments;
  //   private LineSegment tempsegment;
 //    private LinkedList<LineSegmentPoint> SegmentPoint;
+//    private LinkedList<Integer> EndLinPosition;
     private boolean duplicate;
+    private int EndPoint;
+
 
     public FastCollinearPoints(Point[] points) {
         if (points == null) throw new IllegalArgumentException();
@@ -38,14 +41,34 @@ public class FastCollinearPoints {
 
             //Arrays.sort(slopes);
 
-            for (int t = 0; t < points.length - 1; t++) {
-                if (slopes[t][1] == slopes[t + 1][1]) {
-                    while (t < points.length - 1 && slopes[t][1] == slopes[t + 1][1]) {
+            EndPoint = i;
+            for (int t = 0; t < points.length - 2; t++) {
+                if (slopes[t][1] == slopes[t + 1][1]
+                        && slopes[t][1] == slopes[t+1][1]
+                        && slopes[t][1] == slopes[t+2][1]) {
+                    if((int)slopes[t][0] > EndPoint){
+                        EndPoint = (int)slopes[t][0];
+                    }
+                    if((int)slopes[t+1][0] > EndPoint){
+                        EndPoint = (int)slopes[t][0];
+                    }
+                    if((int)slopes[t+2][0] > EndPoint){
+                        EndPoint = (int)slopes[t][0];
+                    }
+
+                    t = t + 2;
+                    while (t < points.length - 1&&
+                            slopes[t][1] == slopes[t+1][1]){
+                        if((int)slopes[t+1][0] > EndPoint){
+                            EndPoint = (int)slopes[t+1][0];
+                        }
+
                         t++;
                     }
+
                     for(int m = 0; m < i; m++){
 
-                        if(points[m].slopeTo(points[(int) slopes[t][0]]) == slopes[t][0]) {
+                        if(points[m].slopeTo(points[EndPoint]) == points[i].slopeTo(points[EndPoint])) {
                             duplicate = true;
                         }
                     }

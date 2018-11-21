@@ -25,6 +25,14 @@ public class test {
         collinear.segments();
 
 
+        BruteCollinearPoints Bcollinear = new BruteCollinearPoints(points);
+        collinear.segments();
+        collinear.segments();
+        collinear.numberOfSegments();
+        collinear.segments();
+
+
+
 
     }
 
