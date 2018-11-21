@@ -1,18 +1,23 @@
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class FastCollinearPoints {
 
-    LinkedList<LineSegment> segment = new LinkedList<>();
-    int numOfSegments = 0;
+    private LinkedList<LineSegment> segment = new LinkedList<>();
+    private int numOfSegments = 0;
     public FastCollinearPoints(Point[] points){
+        if (points == null) throw new IllegalArgumentException("the point is null");
+        Arrays.sort(points);
         double[][] slopes = new double[points.length][2];
      for(int i = 0; i < points.length; i++) {
-         for (int j = 0; j < points.length; j++) {
-             slopes[j][0] = j;
-             slopes[j][1] = points[i].slopeTo(points[j]);
+         for (int j = i+1 ; j < points.length; j++) {
+             if (points[i] == null || points[j] == null || (i!=j && points[i]==points[j])) {
 
+                 throw new IllegalArgumentException(" one of the point is null");
+             }
+                 slopes[j][0] = j;
+                 slopes[j][1] = points[i].slopeTo(points[j]);
          }
-
 
          java.util.Arrays.sort(slopes, new java.util.Comparator<double[]>() {
              public int compare(double[] a, double[] b) {
@@ -20,10 +25,12 @@ public class FastCollinearPoints {
              }
          });
 
-         for (int t = 1; t < points.length - 1; t++) {
-
-             if (slopes[t - 1][1] == slopes[t][1] && slopes[t][1] == slopes[t + 1][1]) {
-                 segment.add(new LineSegment(points[i], points[(int)slopes[t + 1][0]]));
+         for (int t = 0; t < points.length - 1; t++) {
+             if(slopes[t][1] == slopes[t+1][1]) {
+                 while (slopes[t][1] == slopes[t + 1][1]) {
+                     t++;
+                 }
+                 segment.add(new LineSegment(points[i], points[(int) slopes[t][0]]));
                  numOfSegments++;
              }
          }
