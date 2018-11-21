@@ -8,18 +8,19 @@ public class BruteCollinearPoints {
 
     public BruteCollinearPoints(Point[] points){
 
-        if (points == null) throw new IllegalArgumentException("the point is null");
+        if (points == null) throw new IllegalArgumentException();
         try {
             Arrays.sort(points);
         }catch (NullPointerException e){
-            throw new IllegalArgumentException("one of the points is null");
+            throw new IllegalArgumentException();
         }
          for (int i = 0; i < points.length; i++){
              for (int j = i+1; j < points.length; j++){
                  for (int k =j+1; k < points.length; k++){
                      for (int m = k+1; m < points.length; m++ ){
-                         if (points[i] == points[j] || points[i] == points[k] || points[i] == points[m]) {
-                             throw new IllegalArgumentException("dublicate points");
+                         if (points[i].equals(points[j]) || points[i].equals(points[k]) || points[i].equals(points[m])
+                         || points[i] == null || points[j] == null || points[k] == null || points[m] == null) {
+                             throw new IllegalArgumentException();
                          }
                          if (points[i].slopeTo(points[j]) == points[i].slopeTo(points[k])
                          && points[i].slopeTo(points[j]) == points[i].slopeTo(points[m])){

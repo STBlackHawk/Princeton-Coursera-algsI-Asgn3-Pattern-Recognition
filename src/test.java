@@ -10,7 +10,19 @@ public class test {
         int n = in.nextInt();
         Point[] points = new Point[n];
 
-        for (int i = 0; )
+        for (int i = 0; i <n; i++){
+            int x = in.nextInt();
+            int y = in.nextInt();
+            points[i] = new Point(x, y);
+        }
+
+
+
+        FastCollinearPoints collinear = new FastCollinearPoints(points);
+        collinear.segments();
+        collinear.segments();
+        collinear.numberOfSegments();
+        collinear.segments();
 
 
 
